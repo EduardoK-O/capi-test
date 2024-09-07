@@ -16,7 +16,7 @@ class TelefonoFactory extends Factory
     {
         return [
             'numero_telefono' => $this->faker->phoneNumber,
-            'id_contacto' => Contacto::factory()
+            'contacto_id' => Contacto::factory()
         ];
     }
 }

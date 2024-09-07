@@ -29,7 +29,16 @@ class ContactoController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'nombre' => 'required|string|max:50'
+            'nombre' => 'required|string|max:50',
+            'notas' => 'nullable|string|max:255',
+            'pagina_web' => 'nullable|url',
+            'fecha_cumpleanios' => 'nullable|date_format:Y-m-d',
+            'emails' => 'nullable|array',
+            'emails.*.email' => 'required_if:emails,array|email', // Validar cada email dentro del array
+            'direcciones' => 'nullable|array',
+            'direcciones.*.direccion' => 'required_if:direcciones,array|string|max:255',
+            'telefonos' => 'nullable|array',
+            'telefonos.*.numero_telefono' => 'required_if:telefonos,array|string|max:20'
         ]);
 
         return response()->json($this->contactoService->createContacto($data), 201);
@@ -49,9 +58,17 @@ class ContactoController extends Controller
     public function update(Request $request, string $id)
     {
         $data = $request->validate([
-            'nombre' => 'required|string|max:50'
+            'nombre' => 'required|string|max:50',
+            'notas' => 'nullable|string|max:255',
+            'pagina_web' => 'nullable|url',
+            'fecha_cumpleanios' => 'nullable|date_format:Y-m-d',
+            'emails' => 'nullable|array',
+            'emails.*.email' => 'required_if:emails,array|email', // Validar cada email dentro del array
+            'direcciones' => 'nullable|array',
+            'direcciones.*.direccion' => 'required_if:direcciones,array|string|max:255',
+            'telefonos' => 'nullable|array',
+            'telefonos.*.numero_telefono' => 'required_if:telefonos,array|string|max:20'
         ]);
-
         return response()->json($this->contactoService->updateContacto($id, $data), 201);
     }
 

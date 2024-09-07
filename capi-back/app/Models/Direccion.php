@@ -5,13 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Telefono extends Model
+class Direccion extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'numero_telefono'
-    ];
+    protected $table = 'direcciones';
 
     public function contacto()
     {

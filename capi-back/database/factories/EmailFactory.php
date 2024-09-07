@@ -16,8 +16,7 @@ class EmailFactory extends Factory
     {
         return [
             'email' => $this->faker->unique()->safeEmail,
-            'id_contacto' => Contacto::factory()
-
+            'contacto_id' => Contacto::factory()
         ];
     }
 }
