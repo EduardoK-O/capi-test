@@ -15,5 +15,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(ContactoSeeder::class);
         $this->call(TelefonoSeeder::class);
+        $this->call(EmailSeeder::class);
     }
 }
