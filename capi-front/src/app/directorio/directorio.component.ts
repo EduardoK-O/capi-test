@@ -1,48 +1,97 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, OnInit } from '@angular/core';
 import { ServicioDirectorioService } from '../services/servicio-directorio.service';
 
 @Component({
   selector: 'app-directorio',
   templateUrl: './directorio.component.html',
-  styleUrl: './directorio.component.css'
+  styleUrls: ['./directorio.component.css']
 })
-export class DirectorioComponent implements OnInit, AfterViewInit {
+export class DirectorioComponent implements OnInit {
 
-  displayedColumns: string[] = ['id','nombre', 'notas', 'pagina_web'];
-  dataSource = new MatTableDataSource<Element>();
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  dataSource: Element[] = [];
+  filteredData: Element[] = [];
+  paginatedData: Element[] = [];
+  currentPage = 1;
+  pageSize = 10;
+  totalPages: number = 0;
+  pages: number[] = [];
+  filterValue = '';
 
   constructor(private directorioService: ServicioDirectorioService) { }
 
   ngOnInit() {
     this.directorioService.obtenerTodos().subscribe(data => {
-      this.dataSource.data = data;
-    })
+      this.dataSource = data;
+      this.filteredData = this.dataSource;
+      this.totalPages = Math.ceil(this.filteredData.length / this.pageSize);
+      this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
+      this.updatePaginatedData();
+    });
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+  applyFilter() {
+    if (this.filterValue) {
+      this.filteredData = this.dataSource.filter(element =>
+        element.nombre.toLowerCase().includes(this.filterValue.toLowerCase()) ||
+        element.notas.toLowerCase().includes(this.filterValue.toLowerCase()) ||
+        element.pagina_web.toLowerCase().includes(this.filterValue.toLowerCase())
+      );
+    } else {
+      this.filteredData = this.dataSource;
     }
+    this.totalPages = Math.ceil(this.filteredData.length / this.pageSize);
+    this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
+    this.updatePaginatedData();
+  }
+
+  updatePaginatedData() {
+    const start = (this.currentPage - 1) * this.pageSize;
+    const end = start + this.pageSize;
+    this.paginatedData = this.filteredData.slice(start, end);
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updatePaginatedData();
+    }
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.updatePaginatedData();
+    }
+  }
+
+  goToPage(page: number) {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.updatePaginatedData();
+    }
+  }
+
+  editarElemento(element: Element) {
+    // Implementar lógica de edición
+    console.log('Editando elemento', element);
+  }
+
+  eliminarElemento(id: number) {
+    // Implementar lógica de eliminación
+    console.log('Eliminando elemento con id', id);
+    this.directorioService.eliminar(id).subscribe(() => {
+      this.dataSource = this.dataSource.filter(e => e.id !== id);
+      this.filteredData = this.dataSource;
+      this.totalPages = Math.ceil(this.filteredData.length / this.pageSize);
+      this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
+      this.updatePaginatedData();
+    });
   }
 }
 
 export interface Element {
   id: number;
   nombre: string;
-  notas: string,
-  pagina_web: string
+  notas: string;
+  pagina_web: string;
 }

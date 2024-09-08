@@ -5,10 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { DirectorioComponent } from './directorio/directorio.component';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
 import { provideHttpClient, withFetch } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,9 +15,7 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule
+    FormsModule
   ],
   providers: [
     provideHttpClient(withFetch()),
