@@ -13,6 +13,11 @@
                         <input type="text" class="form-control" id="nombre" [(ngModel)]="contacto.nombre" name="nombre">
                     </div>
                     <div class="mb-3">
+                        <label for="fecha_cumpleanios" class="form-label">Fecha de cumpleaños</label>
+                        <input type="date" class="form-control" id="fecha_cumpleanios"
+                            [(ngModel)]="contacto.fecha_cumpleanios" name="fecha_cumpleanios">
+                    </div>
+                    <div class="mb-3">
                         <label for="notas" class="form-label">Notas</label>
                         <input type="text" class="form-control" id="notas" [(ngModel)]="contacto.notas" name="notas">
                     </div>
@@ -20,6 +25,45 @@
                         <label for="pagina_web" class="form-label">Página Web</label>
                         <input type="text" class="form-control" id="pagina_web" [(ngModel)]="contacto.pagina_web"
                             name="pagina_web">
+                    </div>
+                    <div class="mb-3">
+                        <label for="telefono" class="form-label">Números de Teléfono</label>
+                        <div *ngFor="let telefono of contacto.telefonos; let i = index" class="input-group mb-2">
+                            <input type="text" class="form-control" [(ngModel)]="telefono.numero_telefono"
+                                name="telefono-{{i}}">
+                            <button type="button" class="btn btn-danger" (click)="removeTelefono(i)">Eliminar</button>
+                        </div>
+                        <button type="button" class="btn btn-secondary" (click)="addTelefono()">Agregar
+                            Teléfono</button>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Correos Electrónicos</label>
+                        <div *ngFor="let email of contacto.emails; let i = index" class="input-group mb-2">
+                            <input type="email" class="form-control" [(ngModel)]="email.email" name="email-{{i}}">
+                            <button type="button" class="btn btn-danger" (click)="removeEmail(i)">Eliminar</button>
+                        </div>
+                        <button type="button" class="btn btn-secondary" (click)="addEmail()">Agregar Email</button>
+                    </div>
+                    <div class="mb-3">
+                        <label for="direccion" class="form-label">Direcciones</label>
+                        <div *ngFor="let direccion of contacto.direcciones; let i = index" class="mb-3">
+                            <div class="input-group mb-2">
+                                <input type="text" class="form-control" [(ngModel)]="direccion.calle" name="calle-{{i}}"
+                                    placeholder="Calle">
+                                <input type="text" class="form-control" [(ngModel)]="direccion.ciudad"
+                                    name="ciudad-{{i}}" placeholder="Ciudad">
+                                <input type="text" class="form-control" [(ngModel)]="direccion.estado"
+                                    name="estado-{{i}}" placeholder="Estado">
+                                <input type="text" class="form-control" [(ngModel)]="direccion.pais" name="pais-{{i}}"
+                                    placeholder="País">
+                                <input type="text" class="form-control" [(ngModel)]="direccion.codigo_postal"
+                                    name="codigo_postal-{{i}}" placeholder="Código Postal">
+                                <button type="button" class="btn btn-danger"
+                                    (click)="removeDireccion(i)">Eliminar</button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-secondary" (click)="addDireccion()">Agregar
+                            Dirección</button>
                     </div>
                 </form>
             </div>

@@ -1,7 +1,9 @@
 <div class="container mt-4">
   <div class="d-flex justify-content-between">
     <h2>Directorio</h2>
-    <button type="button" class="btn btn-primary" (click)="openModal()">Agregar Nuevo</button>
+    <button type="button" class="btn btn-success btn-sm" (click)="openModal()">
+      Agregar contacto
+    </button>
     <div class="mb-3">
       <input type="text" class="form-control" placeholder="Buscar..." [(ngModel)]="filterValue" (ngModelChange)="applyFilter()">
     </div>
@@ -20,6 +22,7 @@
         <tr>
           <th>ID</th>
           <th>Nombre</th>
+          <th>Fecha de cumpleaños</th>
           <th>Notas</th>
           <th>Página Web</th>
           <th>Acciones</th>
@@ -29,6 +32,7 @@
         <tr *ngFor="let element of paginatedData">
           <td>{{ element.id }}</td>
           <td>{{ element.nombre }}</td>
+          <td>{{ element.fecha_cumpleanios }}</td>
           <td>{{ element.notas }}</td>
           <td>{{ element.pagina_web }}</td>
           <td class="d-flex">

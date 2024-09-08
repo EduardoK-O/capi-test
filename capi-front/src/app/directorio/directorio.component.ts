@@ -15,12 +15,16 @@ export class DirectorioComponent implements OnInit {
   totalPages: number = 0;
   pages: number[] = [];
   filterValue = '';
-  selectedContacto: Element = { id: 0, nombre: '', notas: '', pagina_web: '' };
+  selectedContacto: Element = { id: 0, nombre: '', notas: '', pagina_web: '', fecha_cumpleanios: '', telefonos: [], emails: [], direcciones: [] };
   isEditing: boolean = false;
 
   constructor(private directorioService: ServicioDirectorioService) { }
 
   ngOnInit() {
+    this.cargarDatos();
+  }
+
+  cargarDatos(){
     this.directorioService.obtenerTodos().subscribe(data => {
       this.dataSource = data;
       this.filteredData = this.dataSource;
@@ -72,7 +76,7 @@ export class DirectorioComponent implements OnInit {
     }
   }
 
-  openModal(contacto: Element = { id: 0, nombre: '', notas: '', pagina_web: '' }) {
+  openModal(contacto: Element = { id: 0, nombre: '', notas: '', pagina_web: '', fecha_cumpleanios: '', telefonos: [], emails: [], direcciones: [] }) {
     this.selectedContacto = { ...contacto };
     this.isEditing = contacto.id !== 0;
     const modal = document.getElementById('contactoModal');
@@ -89,6 +93,7 @@ export class DirectorioComponent implements OnInit {
         this.filteredData = this.dataSource;
         this.totalPages = Math.ceil(this.filteredData.length / this.pageSize);
         this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
+        this.cargarDatos();
         this.updatePaginatedData();
       });
     } else {
@@ -97,6 +102,7 @@ export class DirectorioComponent implements OnInit {
         this.filteredData = this.dataSource;
         this.totalPages = Math.ceil(this.filteredData.length / this.pageSize);
         this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
+        this.cargarDatos();
         this.updatePaginatedData();
       });
     }
@@ -123,4 +129,8 @@ export interface Element {
   nombre: string;
   notas: string;
   pagina_web: string;
+  fecha_cumpleanios: string;
+  telefonos: any;
+  emails: any;
+  direcciones: any;
 }

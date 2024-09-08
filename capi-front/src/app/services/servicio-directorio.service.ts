@@ -22,7 +22,7 @@ export class ServicioDirectorioService {
     return this.http.post(`${this.apiURL}`, data);
   }
 
-  editar($data: any, $id: any): Observable<any> {
+  editar( $id: any, $data: any): Observable<any> {
     let data = Object.assign({}, $data);
     return this.http.put(`${this.apiURL}/${$id}`, data);
   }
