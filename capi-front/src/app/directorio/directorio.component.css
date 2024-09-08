@@ -1,0 +1,15 @@
+.container{
+    padding: 5rem;
+    max-height: 100%;
+}
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.input {
+    height: 2rem;
+    width: 20rem;
+}
