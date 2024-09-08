@@ -9,6 +9,10 @@ class Email extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'email'
+    ];
+
     public function contacto()
     {
         return $this->belongsTo(Contacto::class);

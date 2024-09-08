@@ -36,7 +36,11 @@ class ContactoController extends Controller
             'emails' => 'nullable|array',
             'emails.*.email' => 'required_if:emails,array|email', // Validar cada email dentro del array
             'direcciones' => 'nullable|array',
-            'direcciones.*.direccion' => 'required_if:direcciones,array|string|max:255',
+            'direcciones.*.calle' => 'nullable|string|max:255',
+            'direcciones.*.ciudad' => 'nullable|string|max:255',
+            'direcciones.*.estado' => 'nullable|string|max:255',
+            'direcciones.*.pais' => 'nullable|string|max:255',
+            'direcciones.*.codigo_postal' => 'nullable|string|max:20',
             'telefonos' => 'nullable|array',
             'telefonos.*.numero_telefono' => 'required_if:telefonos,array|string|max:20'
         ]);
@@ -65,7 +69,11 @@ class ContactoController extends Controller
             'emails' => 'nullable|array',
             'emails.*.email' => 'required_if:emails,array|email', // Validar cada email dentro del array
             'direcciones' => 'nullable|array',
-            'direcciones.*.direccion' => 'required_if:direcciones,array|string|max:255',
+            'direcciones.*.calle' => 'nullable|string|max:255',
+            'direcciones.*.ciudad' => 'nullable|string|max:255',
+            'direcciones.*.estado' => 'nullable|string|max:255',
+            'direcciones.*.pais' => 'nullable|string|max:255',
+            'direcciones.*.codigo_postal' => 'nullable|string|max:20',
             'telefonos' => 'nullable|array',
             'telefonos.*.numero_telefono' => 'required_if:telefonos,array|string|max:20'
         ]);

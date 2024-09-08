@@ -11,6 +11,15 @@ class Direccion extends Model
 
     protected $table = 'direcciones';
 
+    protected $fillable = [
+        'calle',
+        'ciudad',
+        'estado',
+        'pais',
+        'codigo_postal'
+    ];
+    
+
     public function contacto()
     {
         return $this->belongsTo(Contacto::class);
