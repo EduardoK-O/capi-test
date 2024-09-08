@@ -1,11 +1,18 @@
 <div class="container mt-4">
   <div class="d-flex justify-content-between">
     <h2>Directorio</h2>
-  
+    <button type="button" class="btn btn-primary" (click)="openModal()">Agregar Nuevo</button>
     <div class="mb-3">
       <input type="text" class="form-control" placeholder="Buscar..." [(ngModel)]="filterValue" (ngModelChange)="applyFilter()">
     </div>
   </div>
+
+  <app-modal-contacto
+    [contacto]="selectedContacto"
+    [isEditing]="isEditing"
+    (save)="guardarContacto($event)"
+    (cancel)="onCancel()">
+  </app-modal-contacto>
 
   <div class="table-container">
     <table class="table table-striped table-bordered">
@@ -25,10 +32,10 @@
           <td>{{ element.notas }}</td>
           <td>{{ element.pagina_web }}</td>
           <td class="d-flex">
-            <button class="btn btn-primary btn-sm" (click)="editarElemento(element)">
+            <button class="btn btn-primary btn-sm" (click)="openModal(element)">
               <i class="material-icons">edit</i>
             </button>
-            <button class="btn btn-danger btn-sm" (click)="eliminarElemento(element.id)">
+            <button class="btn btn-danger btn-sm" (click)="eliminarContacto(element.id)">
               <i class="material-icons">delete</i>
             </button>
           </td>
@@ -51,4 +58,3 @@
     </ul>
   </nav>
 </div>
-

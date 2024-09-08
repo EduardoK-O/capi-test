@@ -7,7 +7,6 @@ import { ServicioDirectorioService } from '../services/servicio-directorio.servi
   styleUrls: ['./directorio.component.css']
 })
 export class DirectorioComponent implements OnInit {
-
   dataSource: Element[] = [];
   filteredData: Element[] = [];
   paginatedData: Element[] = [];
@@ -16,6 +15,8 @@ export class DirectorioComponent implements OnInit {
   totalPages: number = 0;
   pages: number[] = [];
   filterValue = '';
+  selectedContacto: Element = { id: 0, nombre: '', notas: '', pagina_web: '' };
+  isEditing: boolean = false;
 
   constructor(private directorioService: ServicioDirectorioService) { }
 
@@ -71,13 +72,41 @@ export class DirectorioComponent implements OnInit {
     }
   }
 
-  editarElemento(element: Element) {
-    // Implementar lógica de edición
-    console.log('Editando elemento', element);
+  openModal(contacto: Element = { id: 0, nombre: '', notas: '', pagina_web: '' }) {
+    this.selectedContacto = { ...contacto };
+    this.isEditing = contacto.id !== 0;
+    const modal = document.getElementById('contactoModal');
+    if (modal) {
+      const bootstrapModal = new bootstrap.Modal(modal);
+      bootstrapModal.show();
+    }
   }
 
-  eliminarElemento(id: number) {
-    // Implementar lógica de eliminación
+  guardarContacto(contacto: Element) {
+    if (this.isEditing) {
+      this.directorioService.editar(contacto.id, contacto).subscribe(() => {
+        this.dataSource = this.dataSource.map(e => e.id === contacto.id ? contacto : e);
+        this.filteredData = this.dataSource;
+        this.totalPages = Math.ceil(this.filteredData.length / this.pageSize);
+        this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
+        this.updatePaginatedData();
+      });
+    } else {
+      this.directorioService.guardar(contacto).subscribe((nuevoContacto: Element) => {
+        this.dataSource.push(nuevoContacto);
+        this.filteredData = this.dataSource;
+        this.totalPages = Math.ceil(this.filteredData.length / this.pageSize);
+        this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
+        this.updatePaginatedData();
+      });
+    }
+  }
+
+  onCancel() {
+    // Close modal logic if needed
+  }
+
+  eliminarContacto(id: number) {
     console.log('Eliminando elemento con id', id);
     this.directorioService.eliminar(id).subscribe(() => {
       this.dataSource = this.dataSource.filter(e => e.id !== id);

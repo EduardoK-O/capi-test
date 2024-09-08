@@ -1,0 +1,32 @@
+<div class="modal fade" id="contactoModal" tabindex="-1" aria-labelledby="contactoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="contactoModalLabel">{{ isEditing ? 'Editar Contacto' : 'Agregar Contacto' }}
+                </h5>
+                <button type="button" class="btn-close" aria-label="Close" (click)="onCancel()"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" [(ngModel)]="contacto.nombre" name="nombre">
+                    </div>
+                    <div class="mb-3">
+                        <label for="notas" class="form-label">Notas</label>
+                        <input type="text" class="form-control" id="notas" [(ngModel)]="contacto.notas" name="notas">
+                    </div>
+                    <div class="mb-3">
+                        <label for="pagina_web" class="form-label">Página Web</label>
+                        <input type="text" class="form-control" id="pagina_web" [(ngModel)]="contacto.pagina_web"
+                            name="pagina_web">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancelar</button>
+                <button type="button" class="btn btn-primary" (click)="onSave()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
